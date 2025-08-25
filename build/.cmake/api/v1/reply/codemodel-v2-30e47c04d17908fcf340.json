@@ -1,0 +1,113 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"jsonFile" : "directory-.-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "OPRFTools",
+					"jsonFile" : "directory-OPRFTools-869603ee1b4b988c8579.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "OPRFTools",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "test_demo",
+					"jsonFile" : "directory-test_demo-9d833997bb93f752c4ec.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "test_demo",
+					"targetIndexes" : 
+					[
+						2
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "CryptoMagic",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "CryptoMagic::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-CryptoMagic-1f370906ad48f14b468a.json",
+					"name" : "CryptoMagic",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "PRFTools::@feeace0e0b63f800fc3d",
+					"jsonFile" : "target-PRFTools-b5b6124628882f5e8f35.json",
+					"name" : "PRFTools",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "demo::@207ec1c614b8721f3279",
+					"jsonFile" : "target-demo-452d614fa6b2bbd0e157.json",
+					"name" : "demo",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/hyc/Desktop/gitresp/CryptoMagic-development/build",
+		"source" : "/Users/hyc/Desktop/gitresp/CryptoMagic-development"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 8
+	}
+}
