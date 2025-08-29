@@ -1,10 +1,12 @@
-# PrivacyMagic
+# CryptoMagic
+
+[Chinese](README_CN.md "中文版")                      [Instruction](https://blog.csdn.net/weixin_45993094/article/details/150761261?spm=1011.2415.3001.5331)
 
 <div align = center><img src="./logo/logo.jpg" width="150px"> </div>
 
-**PrivacyMagic Privacy Computing Platform** merges "privacy" security with "magic" flexibility, enabling "data usable but not visible." As a dynamic hub, it integrates federated learning, secure multi-party computation, and homomorphic encryption into modular, plug-and-play tools.
+**CryptoMagic Privacy Computing Platform** merges "crypto" security with "magic" flexibility, enabling "data usable but not visible." As a dynamic hub, it integrates federated learning, secure multi-party computation, and homomorphic encryption into modular, plug-and-play tools.
 
-Supported cryptographic components：
+### Supported cryptographic components：
 
 ---
 
@@ -12,7 +14,17 @@ Supported cryptographic components：
 
     **Communication:** single round.
 
-    **OPRF:** DH-based
+    **OPRF:** DH-based.
+
+    **cryptoTools**: PRNG.
+
+### Tools that need to be installed in advance
+
+---
+
+1. gcc && g++ (version >= 11, support C++20)
+2. cmake (version >= 3.10)
+3. OpenSSL (version >= 3.0)
 
 ### build
 

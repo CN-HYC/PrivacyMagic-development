@@ -12,7 +12,7 @@
 #include <netinet/in.h>
 
 // 命名空间隔离：避免与服务器端或其他库的同名类/函数产生冲突
-namespace SocketClient
+namespace SocketTools
 {
 
     /**

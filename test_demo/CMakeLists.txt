@@ -8,7 +8,11 @@ add_library(demo
     HashDemo.cpp
     PRFDemo.cpp
 )
-
+# 查找OpenSSL
+find_package(OpenSSL REQUIRED)
+include_directories(${OPENSSL_INCLUDE_DIR})
+message(STATUS "OpenSSL 头文件路径: ${OPENSSL_INCLUDE_DIR}")
+add_definitions(-DOPENSSL_NO_SSL3)
 # 为"demo"库设置头文件搜索路径
 # target_include_directories：为指定目标配置头文件目录
 # demo：目标库名称，即上面定义的"demo"
@@ -17,5 +21,5 @@ add_library(demo
 #   - 所有依赖"demo"库的其他目标（如可执行文件）会自动继承此搜索路径
 # ${CMAKE_SOURCE_DIR}/lib：头文件所在的目录，CMAKE_SOURCE_DIR是CMake预定义变量，指向项目根目录
 # 作用：确保编译"demo"库及其依赖项时，能正确找到所需的头文件（避免"头文件未找到"错误）
-target_include_directories(demo PUBLIC ${CMAKE_SOURCE_DIR}/lib)
-target_link_libraries(demo PUBLIC PRFTools)
+#target_include_directories(demo PUBLIC ${CMAKE_SOURCE_DIR}/lib)
+target_link_libraries(demo PUBLIC PRFTools OpenSSL::Crypto OpenSSL::SSL)

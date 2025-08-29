@@ -1,4 +1,5 @@
 #include "PRFDemo.h"
+#include "../CryptoTools/PRNG.hpp"
 
 // 打印十六进制字符串
 void print_hex(const std::string &data, const std::string &label = "")
@@ -18,8 +19,12 @@ int PRFdemo()
 {
     try
     {
+
+        std::string key = CryptoTools::PRNG(16);
+        std::cout << "size = " << key.size() << std::endl;
+        std::cout << "res = " << key << std::endl;
         // 128位密钥(16字节)
-        std::string key = "xQ72kP9aF3sR5dZ8"; // 注意：实际应用中应使用真正随机的密钥
+        //std::string key = "3b52384684e3836b21931521c9a7bf09"; // 注意：实际应用中应使用真正随机的密钥
 
         // 创建PRF实例
         PRF_AES prf(key);

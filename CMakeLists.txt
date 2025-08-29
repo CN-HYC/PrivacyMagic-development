@@ -12,21 +12,25 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 # 添加 cmake 模块路径
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
-
-
 # 设置本项目输出变量（包含找到的路径）
 set(LIBDIVIDE_INCLUDE_DIRS ${LIBDIVIDE_INCLUDE_DIR}) 
 message(STATUS "libdivide 头文件路径: ${LIBDIVIDE_INCLUDE_DIRS}")
 
-# 添加PRF子目录
+# 添加测试子目录
+add_subdirectory(test_demo)
+
 add_subdirectory(OPRFTools)
 
-# 添加子目录
-add_subdirectory(test_demo)
+# 查找OpenSSL
+find_package(OpenSSL REQUIRED)
+include_directories(${OPENSSL_INCLUDE_DIR})
+message(STATUS "OpenSSL 头文件路径: ${OPENSSL_INCLUDE_DIR}")
+add_definitions(-DOPENSSL_NO_SSL3)
 
 #可执行文件名称
 add_executable(${PROJECT_NAME} main.cpp logo/PrintLogo.cpp)
 
+
 # 连接hash库
-target_link_libraries(${PROJECT_NAME} demo PRFTools)
+target_link_libraries(${PROJECT_NAME} PRIVATE demo PRFTools OpenSSL::SSL OpenSSL::Crypto)
 

@@ -11,7 +11,7 @@
 #include <netinet/in.h>
 
 // 服务器端套接字命名空间，隔离与客户端的同名类/函数
-namespace SocketServer
+namespace SocketTools
 {
 
     /**
