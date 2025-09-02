@@ -11,7 +11,7 @@
 #include <utility>
 #include <memory>
 
-namespace Hashing
+namespace HashTools
 {
 
     template <class Key, class T>

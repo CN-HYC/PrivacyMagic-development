@@ -7,6 +7,7 @@ add_library(demo
     STATIC
     HashDemo.cpp
     PRFDemo.cpp
+    PRPDemo.cpp
 )
 # 查找OpenSSL
 find_package(OpenSSL REQUIRED)

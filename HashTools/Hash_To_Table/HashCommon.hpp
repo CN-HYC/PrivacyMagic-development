@@ -8,7 +8,7 @@
 #include <functional>
 #include <cassert>
 
-namespace Hashing
+namespace HashTools
 {
 
     // -------------------------- 哈希混合工具函数 ---------------------------

@@ -4,9 +4,9 @@
 
 
 // 引入哈希相关的头文件（根据实际文件路径调整，确保编译器能找到）
-#include "../HashTools/SHA256.hpp"     // SHA256 哈希算法类
-#include "../HashTools/CuckooHash.hpp"
-#include "../HashTools/SimpleHash.hpp"
+#include "../HashTools/SHA_Family/SHA256.hpp"     // SHA256 哈希算法类
+#include "../HashTools/Hash_To_Table/CuckooHash.hpp"
+#include "../HashTools/Hash_To_Table/SimpleHash.hpp"
 #include <iostream>
 #include <string>
 

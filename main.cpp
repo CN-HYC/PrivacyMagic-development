@@ -1,18 +1,27 @@
 #include <iostream>
-#include "logo/PrintLogo.h"
-#include "test_demo/HashDemo.h"
-#include "test_demo/PRFDemo.h"
-#include "SocketTools/Server_Receiver.hpp"
-#include "SocketTools/Client_Sender.hpp"
-#include "OPRFTools/DH/DH_Sender.hpp"
-#include "OPRFTools/DH/DH_Receiver.hpp"
 #include <string>
 #include <chrono>
 #include <ctime>
 #include <vector>
-//#include "CryptoTools/PRNG.hpp"
+#include "logo/PrintLogo.h"
+
+// 包含测试模块的头文件
+#include "test_demo/HashDemo.h"
+#include "test_demo/PRFDemo.h"
+#include "test_demo/PRPDemo.h"
+
+// 包含SocketTools头文件
+#include "SocketTools/Server_Receiver.hpp"
+#include "SocketTools/Client_Sender.hpp"
+
+// 引入OPRFTools头文件
+#include "OPRFTools/DH/DH_Sender.hpp"
+#include "OPRFTools/DH/DH_Receiver.hpp"
 
 using namespace std;
+// 实现辅助函数
+
+
 /**
  * @brief 主函数，程序入口点。根据命令行参数执行不同的功能模块。
  *
@@ -75,6 +84,10 @@ int main(int argc, char const *argv[])
     {
         // Run the PRF demo
         return PRFdemo();
+    }else if (argc > 1 && string(argv[1]) == "--prp")
+    {
+         return PRPDemo();
+        //return 1;
     }
     else if (argc > 1 && string(argv[1]) == "--oprf")
     {
@@ -120,7 +133,8 @@ int main(int argc, char const *argv[])
         cout << "parm: " << endl;
         cout << "  --logo         Print the logo" << endl;
         cout << "  --hash         Run the hash demo" << endl;
-        cout << "  --prf          Run the PRF demo" << endl
+        cout << "  --prf          Run the PRF demo" << endl;
+        cout << "  --prp          Run the PRP demo" << endl
              << endl;
         cout << "   Two terminals need to be opened: " << endl;
         cout << "  --socket [0|1] Run the socket demo (0 for Server, 1 for Client)" << endl;

@@ -13,7 +13,7 @@
 #include <limits>
 #include <cassert>
 
-namespace Hashing
+namespace HashTools
 {
 
     // ------------------------------- CuckooHash ---------------------------------

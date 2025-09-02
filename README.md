@@ -14,9 +14,9 @@
 
     **Communication:** single round.
 
-    **OPRF:** DH-based.
+    **OPRF:** PRF, DH-based.
 
-    **cryptoTools**: PRNG.
+    **cryptoTools**: PRNG, PRP
 
 ### Tools that need to be installed in advance
 

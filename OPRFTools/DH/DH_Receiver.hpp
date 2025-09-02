@@ -5,7 +5,7 @@
 #include "../../SocketTools/Client_Sender.hpp"
 #include "../../SocketTools/Server_Receiver.hpp"
 #include "../PRF_AES.h"
-#include "../../HashTools/SHA256.hpp"
+#include "../../HashTools/SHA_Family/SHA256.hpp"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -13,19 +13,26 @@
 #include <ctime>
 #include <stdexcept>
 
-namespace OPRF
+namespace OPRFTools
 {
     class DH_Receiver
     {
     private:
-        // 私有工具方法：验证质数参数有效性
+        /**
+         * 验证给定的数是否为有效的质数
+         *
+         * @param p 待验证的质数
+         * @return 如果p是有效且安全的质数则返回true，否则返回false
+         */
         bool isValidPrime(long long p) const
         {
+            // 检查质数大小是否满足安全要求
             if (p <= 1000)
             { // 确保质数足够大（实际应用需更大，这里仅为示例）
                 std::cerr << "[验证失败] 质数p太小，安全性不足\n";
                 return false;
             }
+            // 验证p是否为真正的质数
             if (!is_prime(p))
             {
                 std::cerr << "[验证失败] p不是有效的质数\n";
@@ -34,14 +41,21 @@ namespace OPRF
             return true;
         }
 
-        // 私有工具方法：验证原根有效性
+        /**
+         * 验证给定的数是否为模p的原根
+         * @param g 待验证的原根候选值
+         * @param p 模数，必须为素数
+         * @return 如果g是模p的原根则返回true，否则返回false
+         */
         bool isValidPrimitiveRoot(long long g, long long p) const
         {
+            // 检查原根候选值g的范围是否合法
             if (g <= 1 || g >= p)
             {
                 std::cerr << "[验证失败] 原根g必须在(1, p)范围内\n";
                 return false;
             }
+            // 调用底层函数验证g是否为模p的原根
             if (!is_primitive_root(g, p))
             {
                 std::cerr << "[验证失败] g不是p的有效原根\n";
@@ -50,7 +64,12 @@ namespace OPRF
             return true;
         }
 
-        // 私有工具方法：安全的随机数生成（替代简单的rand()）
+        /**
+         * 生成指定范围内的安全随机数
+         * @param min 随机数的最小值（包含）
+         * @param max 随机数的最大值（包含）
+         * @return 返回[min, max]范围内的随机数
+         */
         long long generateSecureRandom(long long min, long long max) const
         {
             // 实际应用中应使用密码学安全的随机数生成器
@@ -58,12 +77,19 @@ namespace OPRF
             std::uniform_int_distribution<long long> dist(min, max);
             return dist(rng);
         }
-        // 私有工具方法：打印单个OPRF结果（十六进制格式）
+        /**
+         * 打印单个OPRF运算结果并返回格式化后的输出字符串
+         * @param input OPRF运算的输入字符串
+         * @param output OPRF运算的输出字节序列
+         * @param index OPRF运算结果的索引号，用于标识第几个运算结果
+         * @return 格式化后的OPRF输出字符串（十六进制表示）
+         */
         std::string printSingleOprfResult(const std::string &input, const std::string &output, size_t index) const
         {
             std::cout << "OPRF输入 " << index << ": " << input << std::endl;
             std::cout << "OPRF输出 " << index << ": ";
             std::string str = "";
+            // 将输出字节序列转换为十六进制字符串表示
             for (unsigned char byte : output)
             {
                 str += byteToHexString(byte);
@@ -72,6 +98,11 @@ namespace OPRF
         }
 
     public:
+        /**
+         * @brief DH_Receiver构造函数
+         * @details 初始化DH_Receiver对象，设置随机数生成器的种子
+         * @note 使用高精度时钟作为随机数生成器的种子，确保每次运行时获得不同的随机序列
+         */
         DH_Receiver()
         {
             // 初始化随机数生成器（使用高精度时钟作为种子）
@@ -79,9 +110,18 @@ namespace OPRF
         }
 
         /**
-         * 接收方执行Diffie-Hellman密钥交换并计算OPRF结果
-         * @param datasets 待计算OPRF的输入数据集
-         * @return 计算后的OPRF输出集合，失败时返回空向量
+         * @brief 执行接收方的OPRF协议流程，包括密钥交换、共享密钥计算和OPRF值计算。
+         *
+         * 该函数模拟了接收方在OPRF协议中的完整操作流程：
+         * 1. 接收发送方的公开参数（p, g, 发送方公钥）并验证其有效性；
+         * 2. 生成接收方自身的密钥对；
+         * 3. 将接收方的公钥发送给发送方；
+         * 4. 基于双方密钥计算共享密钥；
+         * 5. 使用共享密钥派生PRF密钥，并对输入数据集逐个计算OPRF输出。
+         *
+         * @param datasets 输入的数据集，每个元素为一个字符串，用于计算对应的OPRF值。
+         * @return std::vector<std::string> 返回每个输入数据对应的OPRF输出结果字符串；
+         *         若过程中发生错误，则返回空向量。
          */
         std::vector<std::string> run(const std::vector<std::string> &datasets)
         {
@@ -97,7 +137,7 @@ namespace OPRF
                 std::cout << "\n===== 步骤1/5: 接收公开参数 =====" << std::endl;
                 std::cout << "接收方在端口 " << PARAM_PORT << " 等待发送方的公开参数...\n";
 
-                SocketServer::Receiver<long long> param_server(PARAM_PORT);
+                SocketTools::Receiver<long long> param_server(PARAM_PORT);
                 std::vector<long long> public_params;
 
                 if (param_server.run(public_params) != 0)
@@ -144,7 +184,7 @@ namespace OPRF
                 std::cout << "\n===== 步骤3/5: 发送公开密钥 =====" << std::endl;
                 std::cout << "向发送方端口 " << PUBLIC_KEY_PORT << " 发送接收方公开密钥...\n";
 
-                SocketClient::Sender<long long> key_client("127.0.0.1", PUBLIC_KEY_PORT);
+                SocketTools::Sender<long long> key_client("127.0.0.1", PUBLIC_KEY_PORT);
                 std::vector<long long> receiver_public_key = {public_key_receiver};
 
                 if (key_client.send_array(receiver_public_key) != 0)
