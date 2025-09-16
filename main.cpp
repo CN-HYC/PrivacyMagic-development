@@ -18,9 +18,10 @@
 #include "OPRFTools/DH/DH_Sender.hpp"
 #include "OPRFTools/DH/DH_Receiver.hpp"
 
+#include "CryptoTools/BF.hpp"
+
 using namespace std;
 // 实现辅助函数
-
 
 /**
  * @brief 主函数，程序入口点。根据命令行参数执行不同的功能模块。
@@ -84,10 +85,28 @@ int main(int argc, char const *argv[])
     {
         // Run the PRF demo
         return PRFdemo();
-    }else if (argc > 1 && string(argv[1]) == "--prp")
+    }
+    else if (argc > 1 && string(argv[1]) == "--prp")
     {
-         return PRPDemo();
-        //return 1;
+        return PRPDemo();
+        // return 1;
+    }
+    else if (argc > 1 && string(argv[1]) == "--BF")
+    {
+        // 创建布隆过滤器：预期1000个元素，误判率0.01, hash 函数数量为3
+        CryptoTools::BloomFilter<std::string> filter(1000, 0.01, 3);
+
+        // 插入元素
+        filter.insert("apple");
+        filter.insert("banana");
+        filter.insert("cherry");
+
+        // 检查元素
+        std::cout << "apple: " << (filter.contains("apple") ? "可能存在" : "不存在") << std::endl;
+        std::cout << "banana: " << (filter.contains("banana") ? "可能存在" : "不存在") << std::endl;
+        std::cout << "orange: " << (filter.contains("orange") ? "可能存在" : "不存在") << std::endl;
+
+        return 0;
     }
     else if (argc > 1 && string(argv[1]) == "--oprf")
     {
@@ -134,7 +153,8 @@ int main(int argc, char const *argv[])
         cout << "  --logo         Print the logo" << endl;
         cout << "  --hash         Run the hash demo" << endl;
         cout << "  --prf          Run the PRF demo" << endl;
-        cout << "  --prp          Run the PRP demo" << endl
+        cout << "  --prp          Run the PRP demo" << endl;
+        cout << "  --BF          Run the PRP demo" << endl
              << endl;
         cout << "   Two terminals need to be opened: " << endl;
         cout << "  --socket [0|1] Run the socket demo (0 for Server, 1 for Client)" << endl;

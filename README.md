@@ -16,7 +16,7 @@
 
     **OPRF:** PRF, DH-based.
 
-    **cryptoTools**: PRNG, PRP
+    **cryptoTools**: PRNG, PRP, BF.
 
 ### Tools that need to be installed in advance
 
